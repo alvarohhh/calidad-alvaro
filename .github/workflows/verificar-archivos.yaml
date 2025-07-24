@@ -1,0 +1,28 @@
+name: Verificar archivos esenciales
+
+on: [push]
+
+jobs:
+  validar-archivos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Verificar que los archivos base existen
+        run: |
+          echo "Verificando archivos en carpeta docs/"
+          if [ ! -f docs/index.html ]; then
+            echo "❌ FALTA: docs/index.html"
+            exit 1
+          fi
+          if [ ! -f docs/style.css ]; then
+            echo "❌ FALTA: docs/style.css"
+            exit 1
+          fi
+          if [ ! -f docs/script.js ]; then
+            echo "❌ FALTA: docs/script.js"
+            exit 1
+          fi
+          echo "✅ Todos los archivos existen correctamente."
